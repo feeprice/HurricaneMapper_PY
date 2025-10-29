@@ -22,7 +22,6 @@ arcpy.env.overwriteOutput = True
 #Set storm variable
 storm_season = 2024
 storm_name = "HELENE"
-affected_counties = processed_folder_path / 'affected_counties.shp'
 
 #Set model layers
 ibtracs_NA_points = str(raw_folder_path /'IBTrACS_NA.shp')
@@ -65,10 +64,7 @@ select_output = arcpy.management.SelectLayerByLocation(
 select_result = select_output.getOutput(0)
 
 # %%
-#Copy selected counties to output feature class
-arcpy.management.CopyFeatures(
-    in_features = select_result, 
-    out_feature_class = str(affected_counties)
-)
+# Count the counties
 
-
+county_count = arcpy.management.GetCount(select_result)
+# %%
