@@ -30,7 +30,25 @@ storm_track_points =  "memory\\track_points"
 storm_track_line = "memory\\Tracklines"
 
 # %% [markdown]
+# Create a list of storm names for a given year
+storm_names = []
+
+cursor = arcpy.da.SearchCursor(
+    in_table = ibtracs_NA_points,
+    where_clause = 'SEASON = 2000',
+    field_names = ['NAME']
+)
+
+for row in cursor:
+    storm_name = row[0]
+    if storm_name != 'UNNAMED' and storm_name not in storm_names:
+        storm_names.append(storm_name)
+
+del(cursor)
+
+# %% [markdown]
 # #### Select point features corresponding to a specific storm (season & name)
+
 
 # %%
 #Select points for a given storm
